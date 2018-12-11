@@ -1,0 +1,14 @@
+﻿@using PostingInstructionsApp.Domain;
+
+@{
+    List<Client> clientList = ViewBag.clientList;
+}
+
+<select>
+    <option>Select Client</option>
+    @for (var i = 0; clientList.Count > i; i++)
+    {
+        <option label="@clientList[i].Name" value="@clientList[i].CodeName">@clientList[i].Name</option>
+    }
+</select>
+<!--<button value="button" type="button" onclick="selectClient();">Select Client</button> -->

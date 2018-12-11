@@ -1,0 +1,12 @@
+﻿@using PostingInstructionsApp.Domain;
+
+@{
+    List<ClientVendor> vendorList = ViewBag.vendorList;
+}
+<select>
+    <option>Select Vendors</option>
+    @for (var i = 0; vendorList.Count > i; i++)
+    {
+        <option label="@vendorList[i].VendorName" value="@vendorList[i].ClientCode">@vendorList[i].VendorName</option>
+    }
+</select>

@@ -1,0 +1,28 @@
+﻿@using PostingInstructionsApp.Web.Ui.Models
+@using PostingInstructionsApp.Web
+@model VendorModel
+
+@{
+    ViewBag.Title = "Index";
+    AjaxOptions options = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        //OnSuccess = "formSuccess",
+        //OnFailure = "formFailure",
+        Url = "/ajax/set-auth"
+    };
+}
+
+@*<h2>Index</h2>*@
+@using (Ajax.BeginForm(options))
+{
+    <div class="client-list">
+        @Html.Partial("_ClientSection")
+    </div>
+    <div class="create-vendor">
+        <input />
+    </div>
+    @Html.HiddenFor(m => Model.Name)
+    @Html.HiddenFor(m => Model.ClientName)
+    <button type="submit" onclick="setName()">Select Client</button>
+}

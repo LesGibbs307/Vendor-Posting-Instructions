@@ -1,0 +1,174 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 50px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.middle {
+    padding-top: 60px;
+}
+.middle p {
+    text-align: center;
+    font-size: 1.1em;
+}
+.col-centered {
+    margin: 0 auto;
+    float: none !important;
+    display: block !important;
+}
+.sections {
+    margin-bottom: 30px;
+}
+.bg-danger {
+    background-color: #f2dede !important;
+}
+.client-list, .vendor-list {
+    padding: 0 0 10px;
+}
+#auth-key {
+    padding-top: 20px;
+}
+
+/* New UX/UI css */
+.client-vendor-list {
+    min-width: 1110px;
+}
+.remove-padding {
+    padding: 0 !important;
+}
+.client-vendor-list ul {
+    list-style-type: none;
+}
+.client-vendor-list span {
+    font-size: 1.25em;
+}
+
+.client-vendor-list li {
+    padding: 10px 0;
+    border: 1px solid;
+    background-color: #ccc;
+}
+.client-vendor-list li:hover {
+    background-color: #0055A5;
+    color: #fff;
+}
+.selected {
+    background-color: green !important;
+    color: #fff;
+}
+.non-selected span {
+    opacity: 0.3;
+}
+.non-selected input {
+    cursor: not-allowed;
+}
+.arrow {
+    height: 50px;
+    background-size: 100% auto;
+    margin-top: 30px;
+}
+/*.left:hover {
+    background-image: url('/Images/left-hover.png');
+}*/
+.left {
+    background-image: url('/Images/left-arrow.png');
+}
+/*.right:hover {
+    background-image: url('/Images/right-hover.png');
+}*/
+.right {
+    background-image: url('/Images/right-arrow.png');
+}
+.selected-arrow-left {
+    background-image: url('/Images/left-arrow-selected.png');
+}
+.selected-arrow-right {
+    background-image: url('/Images/right-arrow-selected.png');
+}
+/*.middle {
+    padding-top: 30px;
+}*/
+.middle h2 {
+    text-align: center;
+    padding-top: 15px;
+    font-size: 1.75em;
+}
+.form {
+    padding-top: 50px;
+    float: none !important;
+    min-width: 310px;
+    margin: 0 auto;
+    background: blue;
+    position: fixed !important;
+    top: 50%;
+    left: 35%;
+}
+.btn-group {
+    padding-top: 20px;
+}
+.auth-key {
+    font-size: .9em;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+.pending {
+    background-color: orange !important;
+}
+.client-dropdown {
+    margin-top: 10px;
+}
+.modal-header {
+    color: #fff;
+    background-color: #337ab7;
+}
+#popup-form {
+    margin-top: 10%;
+}
+#popup-form h4 {
+    font-size: 1.5em;
+}
+.existing-vendor li {
+    list-style-type: none;
+}
+.ty-message h1 {
+    text-align: center;
+    padding-top: 20px;
+    display: block !important;
+}
+#count-down {
+    text-align: center;
+}
+.ty-message span {
+    color: #0055A5;
+    text-align: center;
+}
+.submit {
+    margin-top: 10px;
+    padding-left: 30px !important;
+}
+.ty-message h1 {
+    text-align: center;
+    padding-top: 20px;
+    display: block !important;
+    font-size: 3em !important;
+}
+.ty-message p {
+    text-align: center;
+    margin: 40px 0 !important;
+    font-size: 1.5em !important;
+}

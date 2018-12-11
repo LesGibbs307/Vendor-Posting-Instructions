@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InfrastructureModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuthorizationWS">
+          <Key>
+            <PropertyRef Name="AuthorizationGuid" />
+          </Key>
+          <Property Name="AuthorizationGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClientVendorId" Type="int" Nullable="false" />
+          <Property Name="InternalURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientVendorRel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="SourceName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="LDAP" Type="nvarchar" MaxLength="100" />
+          <Property Name="MemberOf" Type="nvarchar" MaxLength="500" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Infrastructure.dbo.v_Clients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_Clients">
+          <Key>
+            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="ClientName" />
+            <PropertyRef Name="ChildName" />
+            <PropertyRef Name="ClientCode" />
+            <PropertyRef Name="Enabled" />
+          </Key>
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ChildName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Infrastructure.dbo.v_ClientVendors' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_ClientVendors">
+          <Key>
+            <PropertyRef Name="ClientVenderId" />
+            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="VendorId" />
+            <PropertyRef Name="ClientName" />
+            <PropertyRef Name="ClientCode" />
+            <PropertyRef Name="SourceName" />
+          </Key>
+          <Property Name="ClientVenderId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ClientCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="VendorName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SourceName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Infrastructure.dbo.v_Employees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="UpdatedTime" />
+            <PropertyRef Name="Enabled" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="100" />
+          <Property Name="Division" Type="nvarchar" MaxLength="50" />
+          <Property Name="LDAP" Type="nvarchar" MaxLength="100" />
+          <Property Name="MemberOf" Type="nvarchar" MaxLength="500" />
+          <Property Name="UpdatedTime" Type="datetime" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="InfrastructureModelStoreContainer">
+          <EntitySet Name="AuthorizationWS" EntityType="Self.AuthorizationWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientVendorRel" EntityType="Self.ClientVendorRel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_Clients" EntityType="Self.v_Clients" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_Clients].[ClientId] AS [ClientId], 
+    [v_Clients].[ClientName] AS [ClientName], 
+    [v_Clients].[ChildName] AS [ChildName], 
+    [v_Clients].[ClientCode] AS [ClientCode], 
+    [v_Clients].[Enabled] AS [Enabled]
+    FROM [dbo].[v_Clients] AS [v_Clients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_ClientVendors" EntityType="Self.v_ClientVendors" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_ClientVendors].[ClientVenderId] AS [ClientVenderId], 
+    [v_ClientVendors].[ClientId] AS [ClientId], 
+    [v_ClientVendors].[VendorId] AS [VendorId], 
+    [v_ClientVendors].[ClientName] AS [ClientName], 
+    [v_ClientVendors].[ClientCode] AS [ClientCode], 
+    [v_ClientVendors].[VendorName] AS [VendorName], 
+    [v_ClientVendors].[SourceName] AS [SourceName]
+    FROM [dbo].[v_ClientVendors] AS [v_ClientVendors]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_Employees" EntityType="Self.v_Employees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_Employees].[EmployeeId] AS [EmployeeId], 
+    [v_Employees].[UserId] AS [UserId], 
+    [v_Employees].[Title] AS [Title], 
+    [v_Employees].[FirstName] AS [FirstName], 
+    [v_Employees].[LastName] AS [LastName], 
+    [v_Employees].[Email] AS [Email], 
+    [v_Employees].[Department] AS [Department], 
+    [v_Employees].[Division] AS [Division], 
+    [v_Employees].[LDAP] AS [LDAP], 
+    [v_Employees].[MemberOf] AS [MemberOf], 
+    [v_Employees].[UpdatedTime] AS [UpdatedTime], 
+    [v_Employees].[Enabled] AS [Enabled]
+    FROM [dbo].[v_Employees] AS [v_Employees]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InfrastructureModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AuthorizationW">
+          <Key>
+            <PropertyRef Name="AuthorizationGuid" />
+          </Key>
+          <Property Name="AuthorizationGuid" Type="Guid" Nullable="false" />
+          <Property Name="ClientVendorId" Type="Int32" Nullable="false" />
+          <Property Name="InternalURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ClientVendorRel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="SourceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LDAP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MemberOf" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="v_Clients">
+          <Key>
+            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="ClientName" />
+            <PropertyRef Name="ChildName" />
+            <PropertyRef Name="ClientCode" />
+            <PropertyRef Name="Enabled" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChildName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="v_ClientVendors">
+          <Key>
+            <PropertyRef Name="ClientVenderId" />
+            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="VendorId" />
+            <PropertyRef Name="ClientName" />
+            <PropertyRef Name="ClientCode" />
+            <PropertyRef Name="SourceName" />
+          </Key>
+          <Property Name="ClientVenderId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VendorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SourceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="v_Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="UpdatedTime" />
+            <PropertyRef Name="Enabled" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Division" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LDAP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MemberOf" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="InfrastructureEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuthorizationWS" EntityType="Self.AuthorizationW" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="ClientVendorRels" EntityType="Self.ClientVendorRel" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendor" />
+          <EntitySet Name="v_Clients" EntityType="Self.v_Clients" />
+          <EntitySet Name="v_ClientVendors" EntityType="Self.v_ClientVendors" />
+          <EntitySet Name="v_Employees" EntityType="Self.v_Employees" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InfrastructureModelStoreContainer" CdmEntityContainer="InfrastructureEntities">
+          <EntitySetMapping Name="AuthorizationWS">
+            <EntityTypeMapping TypeName="InfrastructureModel.AuthorizationW">
+              <MappingFragment StoreEntitySet="AuthorizationWS">
+                <ScalarProperty Name="AuthorizationGuid" ColumnName="AuthorizationGuid" />
+                <ScalarProperty Name="ClientVendorId" ColumnName="ClientVendorId" />
+                <ScalarProperty Name="InternalURL" ColumnName="InternalURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="InfrastructureModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientVendorRels">
+            <EntityTypeMapping TypeName="InfrastructureModel.ClientVendorRel">
+              <MappingFragment StoreEntitySet="ClientVendorRel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="InfrastructureModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LDAP" ColumnName="LDAP" />
+                <ScalarProperty Name="MemberOf" ColumnName="MemberOf" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="InfrastructureModel.Vendor">
+              <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_Clients">
+            <EntityTypeMapping TypeName="InfrastructureModel.v_Clients">
+              <MappingFragment StoreEntitySet="v_Clients">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ChildName" ColumnName="ChildName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_ClientVendors">
+            <EntityTypeMapping TypeName="InfrastructureModel.v_ClientVendors">
+              <MappingFragment StoreEntitySet="v_ClientVendors">
+                <ScalarProperty Name="ClientVenderId" ColumnName="ClientVenderId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_Employees">
+            <EntityTypeMapping TypeName="InfrastructureModel.v_Employees">
+              <MappingFragment StoreEntitySet="v_Employees">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="LDAP" ColumnName="LDAP" />
+                <ScalarProperty Name="MemberOf" ColumnName="MemberOf" />
+                <ScalarProperty Name="UpdatedTime" ColumnName="UpdatedTime" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

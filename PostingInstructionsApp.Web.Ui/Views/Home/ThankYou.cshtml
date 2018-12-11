@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "ThankYou";
+    string client = Session["Client"].ToString();
+    string vendor = Session["Vendor"].ToString();
+    string authKey = Session["AuthKey"].ToString();
+}
+
+<div class="col-xs-12 col-centered ty-message">
+    <h1>Thank you!</h1>
+    <p>@vendor for @client has the AuthKey of <b>@authKey</b></p>
+</div>
+
+<div id="count-down" class="col-xs-12 col-centered"></div>
